@@ -7,7 +7,7 @@ term.setCursorPos(1,1)
 -- Helper functions --
 
 function newLine()
-	local x,y = term.getCursorPos()
+    local x,y = term.getCursorPos()
 	term.setCursorPos(1,y+1)
 end
 
@@ -17,10 +17,12 @@ function parseClipboard(slot)
 	local cbc = br.getBlockData().Items[1].components["create:clipboard_content"]
 	for i,page in ipairs(cbc.pages) do
 		for j,entry in ipairs(page) do
-			num = num + 1
 			local count = entry.item_amount
 			local item = entry.icon.id
-			out[num] = {item=item,count=count}
+			if (count ~= 0) and (item ~= nil) then
+				num = num + 1
+				out[num] = {item=item,count=count}
+			end
 		end
 	end
 	return out
