@@ -28,7 +28,7 @@ end
 
 function printList(list)
 	for i,entry in ipairs(list) do
-		print(entry[item].." - "entry[count])
+		print(entry[item].." - "..entry[count])
 		newLine()
 	end
 end
