@@ -38,9 +38,15 @@ function printList(list)
 end
 
 function exportItem(entry)
-    storage.exportItem(userItem,storage_side)
+    st.exportItem(entry,storage_side)
+end
+
+function exportAllItems(list)
+    for i,entry in ipairs(list) do
+		exportItem(entry)
+    end
 end
 
 lst = parseClipboard(1)
 printList(lst)
-exportItem(lst[1])
+exportAllItems(lst[1])
