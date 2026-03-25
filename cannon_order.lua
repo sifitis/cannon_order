@@ -1,11 +1,11 @@
 
 br = peripheral.find("block_reader")
 st = peripheral.find("rs_bridge")
-storage_side = "left"
+storage_side = "top"
 
 term.clear()
 term.setCursorPos(1,1)
-
+term.setTextColor(colors.white)
 -- Helper functions --
 
 function newLine()
@@ -41,12 +41,25 @@ function exportItem(entry)
     st.exportItem(entry,storage_side)
 end
 
+function getStoredCount(entry)
+	return st.getItem(entry)["amount"]
+end
+
 function exportAllItems(list)
     for i,entry in ipairs(list) do
-		exportItem(entry)
+		request_quantity = entry["count"]
+		stored_quantity = getStoredCount(entry)
+		if stored_quantity >= request_quantity then
+			exportItem(entry)
+			term.setTextColor(colors.green)
+			print(i..": "..entry["name"].." - "..entry["count"])
+		else
+			term.setTextColor(colors.red)
+			print(i..": "..entry["name"].." - "..entry["count"])
+		end
     end
 end
 
 lst = parseClipboard(1)
 printList(lst)
-exportAllItems(lst[1])
+exportAllItems(lst)
